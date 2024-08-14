@@ -6,4 +6,37 @@
 {% endblock head %}
 {% block content %}
     Hello there!
+    <form action="">
+        <label for="nameFilterInput">Name:</label>
+        <input type="text" name="nameFilterInput" id="nameFilterInput">
+        <label for="descriptionFilterInput">Description:</label>
+        <input type="text" name="descriptionFilterInput" id="descriptionFilterInput">
+        <label for="CategoryFilterInput">Category:</label>
+        <select name="CategoryFilterInput" id="CategoryFilterInput">
+            <option value="null">-------</option>
+            {% for category in categories %}
+                <option value="category.pk">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <table>
+        <thead>
+            <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>category</th>
+            <th>quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for thing in things %}
+                <tr>
+                    <td>{{ thing.name }}</td>
+                    <td>{{ thing.description }}</td>
+                    <td>{{ thing.category }}</td>
+                    <td>{{ thing.quantity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 {% endblock content %}
