@@ -5,7 +5,12 @@
     <title>InventoryGMA</title>
 {% endblock head %}
 {% block content %}
-    <form action="{% url nextStep %}" method="post">
+{{extra}}
+    {% if rawUrl %}
+        <form action="{{rawUrl}}" method="post">
+    {% else %}
+        <form action="{% url nextStep %}" method="post">
+    {% endif %}
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Crear">

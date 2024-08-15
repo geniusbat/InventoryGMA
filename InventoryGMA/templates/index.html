@@ -5,20 +5,36 @@
     <title>InventoryGMA</title>
 {% endblock head %}
 {% block content %}
-    Hello there!
-    <form action="">
-        <label for="nameFilterInput">Name:</label>
-        <input type="text" name="nameFilterInput" id="nameFilterInput">
-        <label for="descriptionFilterInput">Description:</label>
-        <input type="text" name="descriptionFilterInput" id="descriptionFilterInput">
-        <label for="CategoryFilterInput">Category:</label>
-        <select name="CategoryFilterInput" id="CategoryFilterInput">
-            <option value="null">-------</option>
-            {% for category in categories %}
-                <option value="category.pk">{{ category.name }}</option>
-            {% endfor %}
-        </select>
-    </form>
+    <div class="">
+        <form action="{% url "filterThings" %}" method="post">
+            {% csrf_token %}
+            <label for="nameFilterInput">Name:</label>
+            <input type="text" name="nameFilterInput" id="nameFilterInput">
+            <label for="descriptionFilterInput">Description:</label>
+            <input type="text" name="descriptionFilterInput" id="descriptionFilterInput">
+            <label for="categoryFilterInput">Category:</label>
+            <select name="categoryFilterInput" id="categoryFilterInput" multiple>
+                <option value="all" selected>All</option>
+                <option value="null">------</option>
+                {% for category in categories %}
+                    <option value="{{category.pk}}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <label for="locationFilterInput">Location:</label>
+            <select name="locationFilterInput" id="locationFilterInput" multiple>
+                <option value="all" selected>All</option>
+                <option value="null">------</option>
+                {% for location in locations %}
+                    <option value="{{location.pk}}">{{ location.name }}</option>
+                {% endfor %}
+            </select>
+            <label for="minNumberFilterInput">Minimum:</label>
+            <input type="number" name="minNumberFilterInput" id="minNumberFilterInput" min="0">
+            <label for="maxNumberFilterInput">Maximum:</label>
+            <input type="number" name="maxNumberFilterInput" id="maxNumberFilterInput" min="0">
+            <input type="submit" value="Filtrar">
+        </form>
+    </div>
     <table>
         <thead>
             <tr>
@@ -26,6 +42,7 @@
             <th>description</th>
             <th>category</th>
             <th>quantity</th>
+            <th>location</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +52,7 @@
                     <td>{{ thing.description }}</td>
                     <td>{{ thing.category }}</td>
                     <td>{{ thing.quantity }}</td>
+                    <td>{{ thing.location }}</td>
                 </tr>
             {% endfor %}
         </tbody>
