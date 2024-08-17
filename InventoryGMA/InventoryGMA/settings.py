@@ -76,7 +76,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 #If false web will use sqlite
-if os.getenv('IGMA_EXTERNAL_DB', "True") == "True":
+if os.getenv('IGMA_EXTERNAL_DB', "False") == "True":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

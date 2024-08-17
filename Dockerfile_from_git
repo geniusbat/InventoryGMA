@@ -1,0 +1,25 @@
+#Deploy image for InventoryGMA
+FROM python:3.12.4
+
+WORKDIR /InventoryGMA
+
+ENV PYTHONUNBUFFERED=1
+ENV IGMA_DEBUG=True
+ENV IGMA_EXTERNAL_DB=False
+
+ADD https://github.com/geniusbat/InventoryGMA.git .
+
+#COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+#COPY . .
+
+EXPOSE 8000
+
+#As git doesnt have the db you have to make migrations first
+RUN ["python", "InventoryGMA/manage.py", "makemigrations"] 
+RUN ["python", "InventoryGMA/manage.py", "migrate", "--run-syncdb"]
+RUN ["python", "InventoryGMA/manage.py", "migrate"]
+
+CMD ["python", "InventoryGMA/manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["gunicorn","--bind", ":8000", "InventoryGMA/InventoryGMA.wsgi:application"]

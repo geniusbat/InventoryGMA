@@ -3,4 +3,4 @@ services:
     build: . 
     ports: 
       - '8000:8000'
-    network_mode: host- host.docker.internal:host-gateway #Havent tested this
+    network_mode: host- host.docker.internal:host-gateway #Havent tested this but should make it so containers access and can be accessed as localhost
