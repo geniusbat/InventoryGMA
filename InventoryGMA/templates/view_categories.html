@@ -1,0 +1,45 @@
+{% extends 'baseTemplates/base.html' %}
+{% load static %}
+{% block head %}
+    {% load static %}
+    <title>Categories</title>
+    <script src="{% static 'viewsDeleteButton.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'viewer.css' %}">
+{% endblock head %}
+{% block content %}
+    <h2>InventoryGMA</h2>
+    <h3>Categories</h3>
+    <div class="aux_navbar">
+        <a href="{% url "index" %}">Home</a>
+        <a href="{% url "categoryView" %}">Locations</a>
+    </div>
+    <form method="GET" action="{% url "categoryForm" %}">
+        <input type="submit" value="Crear nueva categoria">
+    </form>
+    <table class="table_categories">
+        <thead>
+            <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>edit</th>
+            <th>delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.description }}</td>
+                    <td><form action="{% url "updateForm" 'category' category.pk %}"><input type="submit" value="Edit"></form></td>
+                    <td><button id="deleteButtonFor{{category.pk}}" onClick="deleteButtonClick(this.id, {{category.pk}})">Delete</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="DeleteInstanceModal" class="DeleteInstanceModal">
+        Are you sure you want to delete it?
+        <button onClick="deleteYes()">Yes</button>
+        <button onClick="deleteNo()">No</button>
+        <input type="hidden" name="deleteUrlInput" id="deleteUrlInput" value="{% url 'categoryDelete' 123 %}">
+    </div>
+{% endblock content %}

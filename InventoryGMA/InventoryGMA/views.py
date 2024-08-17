@@ -31,37 +31,11 @@ def thingForm_view(request):
         form = ThingForm()
         return render(request, "form.html", {"form": form, "nextStep":"thingForm"})
 
-def categoryForm_view(request):
-    if request.method == "POST":
-        form = CategoryForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            form.save() 
-            return redirect("index")
-        #Went wrong
-        else:
-            context = {"error":form.errors}
-            return render(request, "error.html", context)
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = CategoryForm()
-        return render(request, "form.html",{"form": form, "nextStep":"categoryForm"})
-
-def locationForm_view(request):
-    if request.method == "POST":
-        form = LocationForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            form.save() 
-            return redirect("index")
-        #Went wrong
-        else:
-            context = {"error":form.errors}
-            return render(request, "error.html", context)
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = LocationForm()
-        return render(request, "form.html",{"form": form, "nextStep":"locationForm"})
+def thing_delete(request, id):
+    template = "index.html"
+    ins = get_object_or_404(Thing, pk=id)
+    ins.delete()
+    return redirect("index")
     
 
 def filterThings_view(request):
@@ -156,4 +130,60 @@ def UpdateForm(request, what, id):
         aux = reverse("updateForm", args=[what,id])
         return render(request, "form.html",{"form": form, "rawUrl":aux})
         
-        
+
+def category_view(request):
+    template = "view_categories.html"
+    context = {}
+    context["categories"] = Category.objects.all()
+    return render(request, template, context)
+
+def category_create(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            form.save() 
+            return redirect("index")
+        #Went wrong
+        else:
+            context = {"error":form.errors}
+            return render(request, "error.html", context)
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = CategoryForm()
+        return render(request, "form.html",{"form": form, "nextStep":"categoryForm"})
+
+def category_delete(request, id):
+    template = "view_categories.html"
+    ins = get_object_or_404(Category, pk=id)
+    ins.delete()
+    return redirect("categoryView")
+
+
+def location_view(request):
+    template = "view_locations.html"
+    context = {}
+    context["locations"] = Location.objects.all()
+    return render(request, template, context)
+
+def location_create(request):
+    if request.method == "POST":
+        form = LocationForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            form.save() 
+            return redirect("index")
+        #Went wrong
+        else:
+            context = {"error":form.errors}
+            return render(request, "error.html", context)
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = LocationForm()
+        return render(request, "form.html",{"form": form, "nextStep":"locationForm"})
+
+def location_delete(request, id):
+    template = "view_locations.html"
+    ins = get_object_or_404(Location, pk=id)
+    ins.delete()
+    return redirect("locationView")

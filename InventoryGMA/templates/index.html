@@ -2,10 +2,19 @@
 {% load static %}
 {% block head %}
     {% load static %}
+    <script src="{% static 'viewsDeleteButton.js' %}"></script>
     <title>InventoryGMA</title>
 {% endblock head %}
 {% block content %}
-    <div class="">
+    <h2>InventoryGMA</h2>
+    <div class="aux_navbar">
+        <a href="{% url "locationView" %}">Locations</a>
+        <a href="{% url "categoryView" %}">Categories</a>
+    </div>
+    <form method="GET" action="{% url "thingForm" %}">
+        <input type="submit" value="Create new thing">
+    </form>
+    <div class="filter_form">
         <form action="{% url "filterThings" %}" method="post">
             {% csrf_token %}
             <label for="nameFilterInput">Name:</label>
@@ -35,7 +44,7 @@
             <input type="submit" value="Filtrar">
         </form>
     </div>
-    <table>
+    <table class="Things display">
         <thead>
             <tr>
             <th>name</th>
@@ -53,8 +62,16 @@
                     <td>{{ thing.category }}</td>
                     <td>{{ thing.quantity }}</td>
                     <td>{{ thing.location }}</td>
+                    <td><form action="{% url "updateForm" 'thing' thing.pk %}"><input type="submit" value="Edit"></form></td>
+                    <td><button id="deleteButtonFor{{thing.pk}}" onClick="deleteButtonClick(this.id, {{thing.pk}})">Delete</button></td>
                 </tr>
             {% endfor %}
         </tbody>
-        </table>
+    </table>
+    <div id="DeleteInstanceModal" class="DeleteInstanceModal">
+        Are you sure you want to delete it?
+        <button onClick="deleteYes()">Yes</button>
+        <button onClick="deleteNo()">No</button>
+        <input type="hidden" name="deleteUrlInput" id="deleteUrlInput" value="{% url 'thingDelete' 123 %}">
+    </div>
 {% endblock content %}
