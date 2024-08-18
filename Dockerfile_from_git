@@ -7,12 +7,12 @@ ENV PYTHONUNBUFFERED=1
 ENV IGMA_DEBUG=True
 ENV IGMA_EXTERNAL_DB=False
 
-ADD https://github.com/geniusbat/InventoryGMA.git .
+#ADD https://github.com/geniusbat/InventoryGMA.git .
 
-#COPY requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-#COPY . .
+COPY . .
 
 EXPOSE 8000
 
