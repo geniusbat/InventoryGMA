@@ -1,3 +1,4 @@
+#--AUTOMATE-BUILD--
 #Deploy image for InventoryGMA
 FROM python:3.12.4
 
