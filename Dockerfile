@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8145
 
-CMD ["python", "InventoryGMA/manage.py", "runserver", "0.0.0.0:8000"]
-#CMD ["gunicorn","--bind", ":8000", "InventoryGMA/InventoryGMA.wsgi:application"]
+CMD ["python", "InventoryGMA/manage.py", "runserver", "0.0.0.0:8145"]
+#CMD ["gunicorn","--bind", ":8145", "InventoryGMA/InventoryGMA.wsgi:application"]
