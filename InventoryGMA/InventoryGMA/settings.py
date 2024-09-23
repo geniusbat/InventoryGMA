@@ -17,7 +17,7 @@ if os.getenv('IGMA_DEBUG', "False") == "True":
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [".gmaservices.duckdns.org", "localhost"]
 
 
 # Application definition
@@ -110,7 +110,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+if os.getenv('MGMA_PREFIX_DOMAIN', "False") == "True":
+    STATIC_URL = 'inventorygma/static/'
+else:
+    STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

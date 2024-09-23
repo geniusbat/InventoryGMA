@@ -7,6 +7,7 @@ WORKDIR /InventoryGMA
 ENV PYTHONUNBUFFERED=1
 ENV IGMA_DEBUG=True
 ENV IGMA_EXTERNAL_DB=False
+ENV MGMA_PREFIX_DOMAIN=False
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
